@@ -2,7 +2,7 @@
 #include <SFML/Window/Event.hpp>
 #include "Application.h"
 
-using Clock = std::chrono::steady_clock;
+using namespace std::chrono;
 
 Application::Application()
     : window{sf::VideoMode(1024, 768), "Tetris clone", sf::Style::Titlebar | sf::Style::Close},
@@ -10,12 +10,12 @@ Application::Application()
 }
 
 void Application::start() {
-  auto start = Clock::now();
-  std::chrono::nanoseconds accumulator{0};
-  std::chrono::nanoseconds timestep{16666667};  // 60 updates per second
+  auto start = steady_clock::now();
+  nanoseconds accumulator{0};
+  nanoseconds timestep = duration_cast<nanoseconds>(duration<double>(1.0 / fps));
 
   while (window.isOpen()) {
-    auto end = Clock::now();
+    auto end = steady_clock::now();
     auto dt = end - start;
     start = end;
     accumulator += dt;

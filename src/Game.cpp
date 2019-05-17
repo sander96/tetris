@@ -22,7 +22,7 @@ void Game::update() {
 void Game::render() {
   window.clear();
 
-  sf::CircleShape shape(100.f);
+  sf::CircleShape shape(100.0f);
   shape.setFillColor(sf::Color::Green);
   window.draw(shape);
 

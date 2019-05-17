@@ -10,6 +10,8 @@ public:
 
   void start();
 
+  static constexpr unsigned fps = 60;
+
 private:
   sf::RenderWindow window;
   Game game;
