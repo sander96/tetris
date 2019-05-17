@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.14)
 project(tetris)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wnon-virtual-dtor -pedantic")
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 include_directories(${INCLUDE_DIR})
 
-add_executable(tetris main.cpp)
+add_executable(tetris src/main.cpp src/Application.cpp src/Application.h src/Game.cpp src/Game.h)
 
 find_library(SFML_AUDIO sfml-audio "${PROJECT_SOURCE_DIR}/lib")
 find_library(SFML_GRAPHICS sfml-graphics "${PROJECT_SOURCE_DIR}/lib")
