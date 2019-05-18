@@ -2,6 +2,7 @@
 #define TETRIS_GAME_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "Playfield.h"
 
 class Game {
 public:
@@ -15,6 +16,7 @@ public:
 
 private:
   sf::RenderWindow& window;
+  Playfield playfield;
 
 };
 

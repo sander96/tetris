@@ -3,7 +3,9 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include "Game.h"
 
-Game::Game(sf::RenderWindow& window) : window(window) {
+Game::Game(sf::RenderWindow& window)
+    : window(window),
+      playfield{window} {
 }
 
 void Game::processInput() {
@@ -25,6 +27,8 @@ void Game::render() {
   sf::CircleShape shape(100.0f);
   shape.setFillColor(sf::Color::Green);
   window.draw(shape);
+
+  playfield.render();
 
   window.display();
 }
