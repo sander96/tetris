@@ -3,23 +3,28 @@
 
 #include <array>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "TetrominoType.h"
+#include "BlockType.h"
+#include "Piece.h"
+#include "RandomBag.h"
 
 class Playfield {
 public:
   explicit Playfield(sf::RenderWindow& window);
 
+  void update(RandomBag& randomBag);
+
   void render();
 
 private:
-  sf::Color getPieceColor(TetrominoType type);  // TODO maybe not the best place to put this
+  sf::Color getBlockColor(BlockType type);
 
   sf::RenderWindow& window;
-  std::array<std::array<TetrominoType, 22>, 10> field;
+  std::array<std::array<BlockType, 22>, 10> field;
+  std::array<std::array<BlockType, 22>, 10> fallenPiecesField;
+
+  std::unique_ptr<Piece> currentPiece;
 
   // ghost piece
-
-  // current piece
 
 };
 

@@ -22,7 +22,6 @@ void Application::start() {
 
     while (accumulator >= timestep) {
       accumulator -= timestep;
-      game.processInput();
       game.update();
     }
 

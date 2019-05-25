@@ -1,32 +1,28 @@
 #include "Game.h"
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "Game.h"
 
 Game::Game(sf::RenderWindow& window)
     : window(window),
-      playfield{window} {
-}
-
-void Game::processInput() {
-  sf::Event event{};
-  while (window.pollEvent(event)) {
-    if (event.type == sf::Event::Closed) {
-      window.close();
-    }
-  }
+      playfield{window},
+      randomBag{} {
 }
 
 void Game::update() {
+  // read input
+  int x = 1;
+  bool down = true;
 
+  // update moving piece
+
+  playfield.update(randomBag);
+  gameEvent = GameEvent::NONE;
 }
 
 void Game::render() {
   window.clear();
-
-  sf::CircleShape shape(100.0f);
-  shape.setFillColor(sf::Color::Green);
-  window.draw(shape);
 
   playfield.render();
 
