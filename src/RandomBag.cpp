@@ -1,5 +1,12 @@
+#include <algorithm>
 #include "RandomBag.h"
 
 BlockType RandomBag::next() {
-  return BlockType::T;
+  if (blocks.empty()) {
+    blocks = {BlockType::I, BlockType::O, BlockType::T, BlockType::S, BlockType::Z, BlockType::J, BlockType::L};
+    std::shuffle(blocks.begin(), blocks.end(), randomEngine);
+  }
+  BlockType value = blocks.back();
+  blocks.pop_back();
+  return value;
 }

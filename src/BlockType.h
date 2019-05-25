@@ -9,8 +9,7 @@ enum class BlockType {
   S,
   Z,
   J,
-  L,
-  GHOST
+  L
 };
 
 #endif
