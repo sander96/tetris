@@ -16,7 +16,11 @@ public:
   void render();
 
 private:
+  void clearAll();
+
   void clearFullLines();
+
+  bool isGameOver();
 
   sf::Color getBlockColor(BlockType type);
 

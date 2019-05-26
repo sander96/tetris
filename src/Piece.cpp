@@ -7,37 +7,37 @@ Piece::Piece(sf::RenderWindow& window, BlockType type)
       type(type) {
 
   if (type == BlockType::I) {
-    pieceState.piece = {{false, false, false, false},
-                        {true,  true,  true,  true},
-                        {false, false, false, false},
-                        {false, false, false, false}};
+    pieceState.piece = {{false, true, false, false},
+                        {false, true, false, false},
+                        {false, true, false, false},
+                        {false, true, false, false}};
   } else if (type == BlockType::O) {
     pieceState.piece = {{true, true},
                         {true, true}};
   } else if (type == BlockType::T) {
-    pieceState.piece = {{false, true,  false},
-                        {true,  true,  true},
-                        {false, false, false}};
+    pieceState.piece = {{false, true, false},
+                        {true,  true, false},
+                        {false, true, false}};
   } else if (type == BlockType::S) {
-    pieceState.piece = {{false, true,  true},
+    pieceState.piece = {{false, true,  false},
                         {true,  true,  false},
-                        {false, false, false}};
+                        {true,  false, false}};
   } else if (type == BlockType::Z) {
-    pieceState.piece = {{true,  true,  false},
-                        {false, true,  true},
-                        {false, false, false}};
-  } else if (type == BlockType::J) {
     pieceState.piece = {{true,  false, false},
-                        {true,  true,  true},
-                        {false, false, false}};
+                        {true,  true,  false},
+                        {false, true,  false}};
+  } else if (type == BlockType::J) {
+    pieceState.piece = {{true,  true, false},
+                        {false, true, false},
+                        {false, true, false}};
   } else if (type == BlockType::L) {
-    pieceState.piece = {{false, false, true},
-                        {true,  true,  true},
-                        {false, false, false}};
+    pieceState.piece = {{false, true, false},
+                        {false, true, false},
+                        {true,  true, false}};
   }
 
-  pieceState.positionX = 0;
-  pieceState.positionY = 0;
+  pieceState.positionX = 4;
+  pieceState.positionY = 1;
 }
 
 /**

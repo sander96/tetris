@@ -1,4 +1,4 @@
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics.hpp>
 #include "Playfield.h"
 
 Playfield::Playfield(sf::RenderWindow& window)
@@ -8,12 +8,7 @@ Playfield::Playfield(sf::RenderWindow& window)
       randomBag{} {
 
   currentPiece = std::unique_ptr<Piece>(new Piece(window, randomBag.next()));
-
-  for (int i = 0; i < fallenPiecesField.size(); ++i) {
-    for (int j = 0; j < fallenPiecesField[i].size(); ++j) {
-      fallenPiecesField[i][j] = BlockType::NONE;
-    }
-  }
+  clearAll();
 }
 
 void Playfield::update() {
@@ -23,14 +18,18 @@ void Playfield::update() {
     fallenPiecesField = field;
     currentPiece = std::unique_ptr<Piece>(new Piece(window, randomBag.next()));
     clearFullLines();
+
+    if (isGameOver()) {
+      clearAll();
+    }
   }
 }
 
 void Playfield::render() {
   sf::RectangleShape block{{24, 24}};
   for (unsigned i = 0; i < field.size(); ++i) {
-    for (unsigned j = 0; j < field[i].size(); ++j) {
-      block.setPosition(i * 24, j * 24);
+    for (unsigned j = 2; j < field[i].size(); ++j) {
+      block.setPosition(i * 24, (j - 2) * 24);
       block.setOutlineThickness(1.f);
       block.setOutlineColor(sf::Color::Black);
 
@@ -62,14 +61,37 @@ sf::Color Playfield::getBlockColor(BlockType type) {
 }
 
 void Playfield::clearFullLines() {
-  for (unsigned j = field.size() - 1; j >= 0; --j) {
+  for (int i = 0; i <= 21; ++i) {
     bool fullLine = true;
-    for (int i = 0 ; i < 10; ++i) {
-      fullLine &= field[i][j] != BlockType::NONE;
+    for (int j = 0; j < 10; ++j) {
+      fullLine = fullLine && fallenPiecesField[j][i] != BlockType::NONE;
     }
 
     if (fullLine) {
-      fullLine = true;
+      for (int a = i; a > 0; --a) {
+        for (int b = 0; b < 10; ++b) {
+          fallenPiecesField[b][a] = fallenPiecesField[b][a - 1];
+        }
+      }
+    }
+  }
+}
+
+bool Playfield::isGameOver() {
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 0; j < 10; ++j) {
+      if (fallenPiecesField[j][i] != BlockType::NONE) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+void Playfield::clearAll() {
+  for (auto& i : fallenPiecesField) {
+    for (auto& j : i) {
+      j = BlockType::NONE;
     }
   }
 }
