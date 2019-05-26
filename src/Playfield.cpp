@@ -26,10 +26,10 @@ void Playfield::update() {
 }
 
 void Playfield::render() {
-  sf::RectangleShape block{{24, 24}};
+  sf::RectangleShape block{{36, 36}};
   for (unsigned i = 0; i < field.size(); ++i) {
     for (unsigned j = 2; j < field[i].size(); ++j) {
-      block.setPosition(i * 24, (j - 2) * 24);
+      block.setPosition(i * 36, (j - 2) * 36);
       block.setOutlineThickness(1.f);
       block.setOutlineColor(sf::Color::Black);
 

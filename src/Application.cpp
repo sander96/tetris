@@ -4,7 +4,7 @@
 using namespace std::chrono;
 
 Application::Application()
-    : window{sf::VideoMode(240, 480), "Tetris clone", sf::Style::Titlebar | sf::Style::Close},
+    : window{sf::VideoMode(360, 720), "Tetris clone", sf::Style::Titlebar | sf::Style::Close},
       game{window} {
 }
 
