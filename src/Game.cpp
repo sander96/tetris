@@ -6,19 +6,11 @@
 
 Game::Game(sf::RenderWindow& window)
     : window(window),
-      playfield{window},
-      randomBag{} {
+      playfield{window} {
 }
 
 void Game::update() {
-  // read input
-  int x = 1;
-  bool down = true;
-
-  // update moving piece
-
-  playfield.update(randomBag);
-  gameEvent = GameEvent::NONE;
+  playfield.update();
 }
 
 void Game::render() {

@@ -40,6 +40,9 @@ Piece::Piece(sf::RenderWindow& window, BlockType type)
   pieceState.positionY = 0;
 }
 
+/**
+ * @return true if the current piece has fallen, false otherwise.
+ */
 bool Piece::update(std::array<std::array<BlockType, 22>, 10>& field) {
   PieceState previousState = pieceState;
   GameEvent gameEvent = processInput();
@@ -54,7 +57,7 @@ bool Piece::update(std::array<std::array<BlockType, 22>, 10>& field) {
     rotate();
   } else if (gameEvent == GameEvent::ROTATE_LEFT) {
     rotate();
-  } else if (gameEvent == GameEvent::DOWN) {
+  } else if (gameEvent == GameEvent::DROP) {
     for (int i = 0; !hasFallen(field); ++i) {
       pieceState = previousState;
       pieceState.positionY += i;
@@ -67,8 +70,8 @@ bool Piece::update(std::array<std::array<BlockType, 22>, 10>& field) {
   if (updatesCount % 30 == 0) {
 
     if (hasFallen(field)) {
-      for (int i = 0; i < pieceState.piece.size(); ++i) {
-        for (int j = 0; j < pieceState.piece[i].size(); ++j) {
+      for (unsigned i = 0; i < pieceState.piece.size(); ++i) {
+        for (unsigned j = 0; j < pieceState.piece[i].size(); ++j) {
           if (pieceState.piece[i][j]) {
             field[i + pieceState.positionX][j + pieceState.positionY] = type;
           }
@@ -92,13 +95,9 @@ bool Piece::update(std::array<std::array<BlockType, 22>, 10>& field) {
   return false;
 }
 
-BlockType Piece::getType() const {
-  return type;
-}
-
 bool Piece::hasFallen(const std::array<std::array<BlockType, 22>, 10>& field) {
-  for (int i = 0; i < pieceState.piece.size(); ++i) {
-    for (int j = 0; j < pieceState.piece[i].size(); ++j) {
+  for (unsigned i = 0; i < pieceState.piece.size(); ++i) {
+    for (unsigned j = 0; j < pieceState.piece[i].size(); ++j) {
       if (pieceState.piece[i][j]) {
         if (pieceState.positionY + j > 20) {
           return true;
@@ -114,11 +113,11 @@ bool Piece::hasFallen(const std::array<std::array<BlockType, 22>, 10>& field) {
 }
 
 bool Piece::isCollision(const std::array<std::array<BlockType, 22>, 10>& field) {
-  for (int i = 0; i < pieceState.piece.size(); ++i) {
-    for (int j = 0; j < pieceState.piece[i].size(); ++j) {
-      if (pieceState.piece[i][j] && (field[pieceState.positionX + i][pieceState.positionY + j] != BlockType::NONE ||
-                                     pieceState.positionX + i < 0 || pieceState.positionX + i >= 10 ||
-                                     pieceState.positionY + j >= 22 || pieceState.positionY + j < 0)) {
+  for (unsigned i = 0; i < pieceState.piece.size(); ++i) {
+    for (unsigned j = 0; j < pieceState.piece[i].size(); ++j) {
+      if (pieceState.piece[i][j] && (pieceState.positionX + i < 0 || pieceState.positionX + i >= 10 ||
+                                     pieceState.positionY + j >= 22 || pieceState.positionY + j < 0 ||
+                                     field[pieceState.positionX + i][pieceState.positionY + j] != BlockType::NONE)) {
         return true;
       }
     }
@@ -139,7 +138,7 @@ GameEvent Piece::processInput() {
       } else if (event.key.code == sf::Keyboard::D) {
         return GameEvent::RIGHT;
       } else if (event.key.code == sf::Keyboard::Space) {
-        return GameEvent::DOWN;
+        return GameEvent::DROP;
       } else if (event.key.code == sf::Keyboard::Q) {
         return GameEvent::ROTATE_LEFT;
       } else if (event.key.code == sf::Keyboard::E) {
@@ -152,8 +151,8 @@ GameEvent Piece::processInput() {
 
 void Piece::rotate() {
   auto state = pieceState.piece;
-  for (int i = 0; i < pieceState.piece.size(); ++i) {
-    for (int j = 0; j < pieceState.piece[i].size(); ++j) {
+  for (unsigned i = 0; i < pieceState.piece.size(); ++i) {
+    for (unsigned j = 0; j < pieceState.piece[i].size(); ++j) {
       state[i][j] = pieceState.piece[pieceState.piece.size() - 1 - j][i];
     }
   }

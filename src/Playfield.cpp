@@ -4,37 +4,35 @@
 Playfield::Playfield(sf::RenderWindow& window)
     : window{window},
       field{},
-      fallenPiecesField{} {
-}
+      fallenPiecesField{},
+      randomBag{} {
 
-void Playfield::update(RandomBag& randomBag) {
+  currentPiece = std::unique_ptr<Piece>(new Piece(window, randomBag.next()));
 
-  // TODO rename to line, row etc
-  for (unsigned i = 0; i < field.size(); ++i) {
-    for (unsigned j = 0; j < field[i].size(); ++j) {
-      field[i][j] = fallenPiecesField[i][j];
+  for (int i = 0; i < fallenPiecesField.size(); ++i) {
+    for (int j = 0; j < fallenPiecesField[i].size(); ++j) {
+      fallenPiecesField[i][j] = BlockType::NONE;
     }
   }
+}
 
-  if (currentPiece == nullptr) {
-    currentPiece = std::unique_ptr<Piece>(new Piece(window, randomBag.next()));
-  }
+void Playfield::update() {
+  field = fallenPiecesField;
 
-  if (currentPiece != nullptr && currentPiece->update(field)) {
+  if (currentPiece->update(field)) {
     fallenPiecesField = field;
     currentPiece = std::unique_ptr<Piece>(new Piece(window, randomBag.next()));
+    clearFullLines();
   }
-
-
 }
 
 void Playfield::render() {
+  sf::RectangleShape block{{24, 24}};
   for (unsigned i = 0; i < field.size(); ++i) {
     for (unsigned j = 0; j < field[i].size(); ++j) {
-      sf::RectangleShape block{{24, 24}};
       block.setPosition(i * 24, j * 24);
       block.setOutlineThickness(1.f);
-      block.setOutlineColor(sf::Color::Green);
+      block.setOutlineColor(sf::Color::Black);
 
       BlockType type = field[i][j];
       block.setFillColor(getBlockColor(type));
@@ -58,7 +56,20 @@ sf::Color Playfield::getBlockColor(BlockType type) {
   } else if (type == BlockType::J) {
     return sf::Color::Blue;
   } else if (type == BlockType::L) {
-    return {255, 140, 0}; // ORANGE
+    return {255, 140, 0}; // orange
   }
   return sf::Color::White;
+}
+
+void Playfield::clearFullLines() {
+  for (unsigned j = field.size() - 1; j >= 0; --j) {
+    bool fullLine = true;
+    for (int i = 0 ; i < 10; ++i) {
+      fullLine &= field[i][j] != BlockType::NONE;
+    }
+
+    if (fullLine) {
+      fullLine = true;
+    }
+  }
 }

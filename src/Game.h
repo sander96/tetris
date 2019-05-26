@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Playfield.h"
-#include "RandomBag.h"
-#include "GameEvent.h"
 
 class Game {
 public:
@@ -17,9 +15,6 @@ public:
 private:
   sf::RenderWindow& window;
   Playfield playfield;
-  RandomBag randomBag;
-
-  GameEvent gameEvent = GameEvent::NONE;
 };
 
 #endif

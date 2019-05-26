@@ -1,11 +1,10 @@
 #include <chrono>
-#include <SFML/Window/Event.hpp>
 #include "Application.h"
 
 using namespace std::chrono;
 
 Application::Application()
-    : window{sf::VideoMode(1024, 768), "Tetris clone", sf::Style::Titlebar | sf::Style::Close},
+    : window{sf::VideoMode(240, 768), "Tetris clone", sf::Style::Titlebar | sf::Style::Close},
       game{window} {
 }
 

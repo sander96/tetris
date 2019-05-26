@@ -19,8 +19,6 @@ public:
 
   bool update(std::array<std::array<BlockType, 22>, 10>& field);
 
-  BlockType getType() const;
-
 private:
   bool hasFallen(const std::array<std::array<BlockType, 22>, 10>& field);
 

@@ -1,5 +1,5 @@
-#include <algorithm>
 #include "RandomBag.h"
+#include <algorithm>
 
 BlockType RandomBag::next() {
   if (blocks.empty()) {

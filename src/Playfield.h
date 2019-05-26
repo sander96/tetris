@@ -11,21 +11,21 @@ class Playfield {
 public:
   explicit Playfield(sf::RenderWindow& window);
 
-  void update(RandomBag& randomBag);
+  void update();
 
   void render();
 
 private:
+  void clearFullLines();
+
   sf::Color getBlockColor(BlockType type);
 
   sf::RenderWindow& window;
   std::array<std::array<BlockType, 22>, 10> field;
   std::array<std::array<BlockType, 22>, 10> fallenPiecesField;
+  RandomBag randomBag;
 
   std::unique_ptr<Piece> currentPiece;
-
-  // ghost piece
-
 };
 
 #endif

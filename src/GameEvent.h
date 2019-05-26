@@ -5,7 +5,7 @@ enum class GameEvent {
   NONE,
   LEFT,
   RIGHT,
-  DOWN,
+  DROP,
   ROTATE_RIGHT,
   ROTATE_LEFT
 };
